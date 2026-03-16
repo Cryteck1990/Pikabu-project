@@ -11,10 +11,12 @@ int main()
 	const int tripleBonus = 100;
 
 	int money = startingBalance;
-	char panel0 = 'X';
-	char panel1 = 'X';
-	char panel2 = 'X';
-	srand( time( 0 ) );
+	int bonus = 0;
+	wchar_t panel0 = 'X';
+	wchar_t panel1 = 'X';
+	wchar_t panel2 = 'X';
+	srand(time(0));
+
 
 	do
 	{
@@ -32,26 +34,37 @@ int main()
 		printf("\n");
 		printf("\n");
 		printf("Player money: %i$ \n", money);
+		printf("Bonus: %i$ \n", bonus);
 
-		_getch();
 
 		money = money - turnCost;
 
-		panel0 = 3 + ( rand() % 4 );
-		panel1 = 3 + ( rand() % 4 );
-		panel2 = 3 + ( rand() % 4 );
+		panel0 = 3 + (rand() % 4);
+		panel1 = 3 + (rand() % 4);
+		panel2 = 3 + (rand() % 4);
 
 		if ((panel0 == panel1) && (panel0 == panel2))
-			{
-				money = money + tripleBonus;
-			}
+		{
+			money = money + tripleBonus;
+			bonus = tripleBonus - turnCost;
+		}
 		else
 		{
 			if ((panel0 == panel1) || (panel0 == panel2) || (panel1 == panel2))
 			{
 				money = money + doubleBonus;
+				bonus = doubleBonus - turnCost;
+			}
+			else
+			{
+				if ((panel0 != panel1) || (panel0 != panel2) || (panel1 != panel2))
+				{
+					bonus = 0;
+				}
 			}
 		}
+		
+		_getch();
 	} 
 	while (money >= turnCost);
 	return 0;
